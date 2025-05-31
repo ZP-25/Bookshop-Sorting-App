@@ -5,8 +5,7 @@
  * title, author, genre, and if they are standalone for fiction
  * books. This app outputs a sorted list with the books organized
  * by genre, with the Fiction category first, followed by the 
- * NonFiction. Within each category, the genres are listed by descending 
- * number of books in them. Within a genre, the books are listed by 
+ * NonFiction. Within a genre, the books are listed by 
  * alphabetical order of the author's last name. 
  */
 
@@ -162,9 +161,9 @@ public class BookshopSorter //This is the main class of my Bookshop Sorting App
     }
     
     /**
-     * This method serves to call on the methods to distribute the books into their genres, to sort the books in the genres by alphabetical last name, and to sort the genres in each category by size (number of books in them).
+     * This method serves to call on the methods to distribute the books into their genres, to sort the books in the genres by alphabetical order of author's last name.
      * Pre-condition: The books must have been distributed into the correct Fiction/Nonfiction categories.
-     * Post-condition: All books are distributed to the genres and sorted. The genres themselves are also sorted.
+     * Post-condition: All books are distributed to the genres and sorted. 
      */
     public void sortBooks()
     {
@@ -173,9 +172,6 @@ public class BookshopSorter //This is the main class of my Bookshop Sorting App
 
         sortGenresFiction(fictionGenres, 0);
         sortGenresNonFiction(nonFictionGenres, 0);
-        
-        sortGenreListsFiction(fictionGenres);
-        sortGenreListsNonFiction(nonFictionGenres);
     }
     
     /** 
@@ -347,58 +343,6 @@ public class BookshopSorter //This is the main class of my Bookshop Sorting App
     }
     
     /**
-     * This method uses Insertion Sort to order all the Fiction genres by size. They are all in an ArrayList of Fiction genres, and will be sorted with the genres containing more books in the front of the list/have smaller indices.
-     * Pre-condition: Genre lists must contain books distributed into them.
-     * Post-condition: Fiction genres are ordered by descending book count.
-     * 
-     * @param genreList   List containing Fiction genres that needs to be sorted.
-     */
-    public void sortGenreListsFiction(ArrayList<ArrayList<Fiction>> genreList)
-    {
-        for (int index = 1; index < genreList.size(); index++)
-        {
-            ArrayList<Fiction> currentGenre = genreList.get(index);
-            int currentIndexValue = currentGenre.size();
-            int sortedIndex = index-1; //Sorted element is one less than current index
-            int sortedIndexValue = genreList.get(sortedIndex).size();
-            
-            //traverse sorted elements
-            while (sortedIndex > -1 && sortedIndexValue < currentIndexValue)
-            {
-                genreList.set(sortedIndex+1, genreList.get(sortedIndex)); //shift each element left of the current index by one
-                sortedIndex--; //decrease sorted index
-            }
-            genreList.set(sortedIndex+1, currentGenre); //place current index after the index that we found to be smaller 
-        }
-    }
-    
-    /**
-     * This method uses Insertion Sort to order all the NonFiction genres by size. They are all in an ArrayList of NonFiction genres, and will be sorted with the genres containing more books in the front of the list/have smaller indices.
-     * Pre-condition: Genre lists must contain books distributed into them.
-     * Post-condition: NonFiction genres are ordered by descending book count.
-     * 
-     * @param genreList   List containing NonFiction genres that needs to be sorted.
-     */
-    public void sortGenreListsNonFiction(ArrayList<ArrayList<NonFiction>> genreList)
-    {
-        for (int index = 1; index < genreList.size(); index++)
-        {
-            ArrayList<NonFiction> currentGenre = genreList.get(index);
-            int currentIndexValue = currentGenre.size();
-            int sortedIndex = index-1; //Sorted element is one less than current index
-            int sortedIndexValue = genreList.get(sortedIndex).size();
-                        
-            //traverse sorted elements
-            while (sortedIndex > -1 && sortedIndexValue < currentIndexValue)
-            {
-                genreList.set(sortedIndex+1, genreList.get(sortedIndex)); //shift each element left of the current index by one
-                sortedIndex--; //decrease sorted index
-            }
-            genreList.set(sortedIndex+1, currentGenre); //place current index after the index that we found to be smaller 
-        }
-    }
-    
-    /**
      * This method writes the sorted books into a file to output.
      * Pre-condition: The lists and books are sorted.
      * Post-condition: An output file with the sorted books is generated in the specified path location.
@@ -493,7 +437,6 @@ public class BookshopSorter //This is the main class of my Bookshop Sorting App
             {
                 fileContent += nonFictionGenres.get(indexOfMiscellaneousGenre).get(j).getTitle() + "; " + nonFictionGenres.get(indexOfMiscellaneousGenre).get(j).getAuthor() + "; " + nonFictionGenres.get(indexOfMiscellaneousGenre).get(j).getGenre() + "\n";
             }
-            fileContent += "\n";
         }
         
         //Write file and close writer
